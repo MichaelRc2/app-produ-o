@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos - Vidraçaria</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Projetos</h1>
+            <p>Controle de produção de vidraçaria</p>
+        </header>
+
+        <main>
+            <section class="status-card">
+                <h2>📄 Projetos Cadastrados</h2>
+                <div id="projetos-lista"></div>
+            </section>
+
+            <section class="upload-card">
+                <h3>➕ Adicionar Projeto</h3>
+                <form id="form-projeto" enctype="multipart/form-data">
+                    <input type="text" name="nome" placeholder="Nome do projeto" required />
+                    <input type="file" name="arquivo" accept=".pdf" required />
+                    <button type="submit">Enviar PDF</button>
+                </form>
+                <p id="mensagem-upload"></p>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
