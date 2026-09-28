@@ -28,6 +28,33 @@ db.serialize(() => {
             console.log('✅ Tabela "projetos" pronta');
         }
     });
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS historico_movimentacoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            projeto_id INTEGER NOT NULL,
+            etapa_anterior TEXT,
+            etapa_nova TEXT NOT NULL,
+            motivo TEXT,
+            observacao TEXT,
+            data_movimentacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (projeto_id) REFERENCES projetos(id)
+        )
+    `, (err) => {
+        if (err) {
+            console.error('❌ Erro ao criar tabela historico_movimentacoes:', err.message);
+        } else {
+            console.log('✅ Tabela "historico_movimentacoes" pronta');
+        }
+    });
+
+    // Adicionar colunas se a tabela já existir (compatibilidade com bancos antigos)
+    db.run(`ALTER TABLE historico_movimentacoes ADD COLUMN motivo TEXT`, (err) => {
+        // Ignorar erro se a coluna já existir
+    });
+    db.run(`ALTER TABLE historico_movimentacoes ADD COLUMN observacao TEXT`, (err) => {
+        // Ignorar erro se a coluna já existir
+    });
 });
 
 module.exports = db;

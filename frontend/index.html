@@ -2,35 +2,92 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projetos - Vidraçaria</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Produção — Vidraçaria</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📋 Projetos</h1>
-            <p>Controle de produção de vidraçaria</p>
+    <div class="app">
+        <header class="app-header">
+            <div class="header-top">
+                <div class="logo">
+                    <span class="logo-icon">🏭</span>
+                    <h1>Produção</h1>
+                </div>
+                <button class="btn-add" onclick="document.getElementById('upload-section').scrollIntoView({behavior:'smooth'})">+ Novo projeto</button>
+            </div>
+            <p class="subtitle">Controle de produção de vidraçaria</p>
         </header>
 
-        <main>
-            <section class="status-card">
-                <h2>📄 Projetos Cadastrados</h2>
-                <div id="projetos-lista"></div>
+        <nav class="etapas-nav" aria-label="Etapas de produção">
+            <button class="etapa-btn active" data-etapa="Projetos">Projetos</button>
+            <button class="etapa-btn" data-etapa="Corte">Corte</button>
+            <button class="etapa-btn" data-etapa="Lapidação">Lapidação</button>
+            <button class="etapa-btn" data-etapa="Furação">Furação</button>
+            <button class="etapa-btn" data-etapa="Têmpera">Têmpera</button>
+            <button class="etapa-btn" data-etapa="Pintura">Pintura</button>
+            <button class="etapa-btn" data-etapa="Prontos para instalar">Prontos</button>
+        </nav>
+
+        <main class="main-content">
+            <section class="projetos-section" id="lista-projetos">
+                <div class="section-header">
+                    <h2 id="etapa-titulo">Projetos</h2>
+                    <span class="contador" id="contador-etapa">0</span>
+                </div>
+                <div class="batch-actions">
+                    <button class="btn-batch" onclick="selecionarTodos()">Selecionar todos</button>
+                </div>
+                <div id="cards-container"></div>
+                <div class="batch-actions-fixed">
+                    <button class="btn-batch btn-avancar-lote" onclick="avancarProjetosSelecionados()">Avançar selecionados (<span id="contador-selecionados">0</span>)</button>
+                    <button class="btn-batch btn-excluir-lote" id="btn-excluir-lote" onclick="excluirProjetosSelecionados()" style="display:none;">Excluir selecionados (<span id="contador-selecionados-excluir">0</span>)</button>
+                </div>
             </section>
 
-            <section class="upload-card">
-                <h3>➕ Adicionar Projeto</h3>
+            <section class="upload-section" id="upload-section">
+                <h3>➕ Adicionar Projetos</h3>
                 <form id="form-projeto" enctype="multipart/form-data">
-                    <input type="text" name="nome" placeholder="Nome do projeto" required />
-                    <input type="file" name="arquivo" accept=".pdf" required />
-                    <button type="submit">Enviar PDF</button>
+                    <label for="nome">Nome do projeto</label>
+                    <input type="text" id="nome" name="nome" placeholder="Ex: Vidro Sala João (opcional)" />
+
+                    <label for="arquivo">Arquivo PDF</label>
+                    <input type="file" id="arquivo" name="arquivo" accept=".pdf" multiple required />
+
+                    <button type="submit" class="btn-primary">Enviar projetos</button>
                 </form>
+                <div id="arquivos-selecionados" class="arquivos-lista"></div>
                 <p id="mensagem-upload"></p>
             </section>
         </main>
     </div>
 
+    <div id="modal-voltar" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>↩ Voltar projeto</h3>
+            <label for="etapa-destino">Etapa de destino:</label>
+            <select id="etapa-destino">
+                <option value="">Selecione uma etapa</option>
+            </select>
+            <label for="motivo">Motivo:</label>
+            <select id="motivo" required>
+                <option value="">Selecione um motivo</option>
+                <option value="Reposição">Reposição</option>
+                <option value="Correção">Correção</option>
+                <option value="Retrabalho">Retrabalho</option>
+                <option value="Alteração de projeto">Alteração de projeto</option>
+                <option value="Outro">Outro</option>
+            </select>
+            <label for="observacao">Observação (opcional):</label>
+            <textarea id="observacao" rows="3" placeholder="Descreva o motivo ou detalhes..."></textarea>
+            <div class="modal-buttons">
+                <button onclick="fecharModal()" class="btn-cancel">Cancelar</button>
+                <button onclick="confirmarVoltar()" class="btn-confirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
