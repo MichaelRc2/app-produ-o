@@ -1,24 +1,34 @@
+/* ProduÃ§Ã£o â€” VidraÃ§aria | Redesign visual
+   MantÃ©m os seletores usados pelo HTML e pelo app.js. */
+
+:root {
+    color-scheme: dark;
+    --bg: #0b1018;
+    --bg-glow: #101c2c;
+    --surface: #111a27;
+    --surface-2: #162233;
+    --surface-3: #1b2a3e;
+    --text: #f3f7fc;
+    --text-secondary: #98a9bd;
+    --muted: #6e8198;
+    --primary: #3b91ff;
+    --primary-light: #69b0ff;
+    --primary-dark: #1766cf;
+    --success: #2dd4a0;
+    --danger: #ff6474;
+    --warning: #f7b84b;
+    --border: rgba(157, 184, 215, .14);
+    --border-strong: rgba(157, 184, 215, .24);
+    --shadow: 0 18px 50px rgba(0, 0, 0, .22);
+    --shadow-hover: 0 18px 42px rgba(0, 0, 0, .32), 0 0 0 1px rgba(59, 145, 255, .16);
+    --radius: 22px;
+    --radius-sm: 16px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-:root {
-    --bg: #f4f5f7;
-    --surface: #ffffff;
-    --text: #1a1d23;
-    --text-secondary: #6b7280;
-    --primary: #1e3a5f;
-    --primary-light: #2a5285;
-    --accent: #1e3a5f;
-    --success: #10b981;
-    --danger: #ef4444;
-    --border: #e5e7eb;
-    --shadow: 0 4px 20px rgba(30, 58, 95, 0.08);
-    --shadow-hover: 0 8px 30px rgba(30, 58, 95, 0.12);
-    --radius: 16px;
-    --radius-sm: 10px;
 }
 
 html {
@@ -27,558 +37,1598 @@ html {
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
     min-height: 100vh;
-    line-height: 1.5;
+    background:
+        radial-gradient(ellipse at 50% -15%, rgba(39, 105, 180, .18), transparent 45%),
+        var(--bg);
+    color: var(--text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+    outline: 3px solid rgba(105, 176, 255, .55);
+    outline-offset: 3px;
 }
 
 .app {
-    max-width: 720px;
+    width: min(100% - 32px, 1120px);
     margin: 0 auto;
-    padding: 24px 16px 80px;
+    padding: 34px 0 110px;
 }
 
 /* Header */
 .app-header {
+    position: relative;
     margin-bottom: 28px;
+    padding: 28px 30px 25px;
+    overflow: hidden;
+    background: linear-gradient(125deg, rgba(24, 42, 64, .96), rgba(16, 26, 40, .96) 60%, rgba(17, 37, 60, .92));
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
 }
 
-.header-top {
+.app-header::after {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    right: -75px;
+    top: -130px;
+    border-radius: 50%;
+    background: rgba(59, 145, 255, .13);
+    filter: blur(3px);
+    pointer-events: none;
+}
+
+.header-inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.logo {
+.logo-area {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    min-width: 0;
 }
 
 .logo-icon {
-    font-size: 1.6rem;
-    background: var(--primary);
-    color: #fff;
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(30,58,95,0.25);
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border: 1px solid rgba(123, 187, 255, .3);
+    border-radius: 18px;
+    background: linear-gradient(145deg, #287edb, #174a87);
+    box-shadow: 0 10px 28px rgba(23, 102, 207, .28), inset 0 1px rgba(255,255,255,.18);
+    font-size: 1.8rem;
 }
 
-.app-header h1 {
-    font-size: 1.6rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
+.logo-text h1 {
     color: var(--text);
-    line-height: 1.2;
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -.045em;
+}
+
+.online-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 7px;
+    padding: 4px 9px;
+    border: 1px solid rgba(45, 212, 160, .18);
+    border-radius: 999px;
+    background: rgba(45, 212, 160, .09);
+    color: #6ce5bb;
+    font-size: .72rem;
+    font-weight: 750;
+    letter-spacing: .025em;
 }
 
 .subtitle {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-top: 4px;
-    font-weight: 400;
+    position: relative;
+    z-index: 1;
+    margin-top: 18px;
+    color: #a9bad0;
+    font-size: .92rem;
+    letter-spacing: .005em;
 }
 
-/* Botão principal */
 .btn-add {
-    background: var(--primary);
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 13px;
+    background: linear-gradient(135deg, #419cff, #2474dd);
     color: #fff;
-    border: none;
-    padding: 10px 18px;
-    border-radius: var(--radius-sm);
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(30,58,95,0.25);
-    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 22px rgba(35, 117, 221, .25), inset 0 1px rgba(255,255,255,.18);
+    font-size: .88rem;
+    font-weight: 750;
     white-space: nowrap;
+    cursor: pointer;
+    transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+}
+
+.btn-add:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 11px 28px rgba(35, 117, 221, .32);
+    transform: translateY(-1px);
 }
 
 .btn-add:active {
-    transform: scale(0.97);
-    box-shadow: 0 2px 8px rgba(30,58,95,0.2);
+    transform: translateY(0) scale(.98);
 }
 
-/* Navegação de etapas */
+/* Production stages */
 .etapas-nav {
     display: flex;
-    gap: 8px;
+    gap: 9px;
     overflow-x: auto;
-    padding-bottom: 8px;
-    margin-bottom: 24px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    margin: 0 0 26px;
+    padding: 4px 2px 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #2c4563 transparent;
+    -webkit-overflow-scrolling: touch;
 }
 
 .etapas-nav::-webkit-scrollbar {
-    display: none;
+    height: 5px;
+}
+
+.etapas-nav::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+    background: #2c4563;
 }
 
 .etapa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     flex: 0 0 auto;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    color: var(--text-secondary);
-    padding: 10px 14px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow);
+    min-height: 48px;
+    padding: 0 15px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(17, 26, 39, .88);
+    color: #a8b8cb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    font-size: .83rem;
+    font-weight: 700;
+    text-decoration: none;
     white-space: nowrap;
+    transition: border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
 }
 
-.etapa-btn.active {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-    box-shadow: 0 4px 14px rgba(30,58,95,0.25);
+.etapa-btn .etapa-num {
+    display: inline-grid;
+    place-items: center;
+    width: 25px;
+    height: 25px;
+    border: 1px solid rgba(151, 176, 205, .17);
+    border-radius: 8px;
+    background: rgba(255,255,255,.035);
+    color: #8196af;
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .02em;
 }
 
 .etapa-btn:hover:not(.active) {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: rgba(105, 176, 255, .42);
+    background: #16263a;
+    color: #eaf4ff;
+    transform: translateY(-1px);
 }
 
-/* Seção de projetos */
-.projetos-section {
-    background: var(--surface);
+.etapa-btn.active {
+    border-color: rgba(105, 176, 255, .5);
+    background: linear-gradient(135deg, #1e68b7, #174a87);
+    color: #fff;
+    box-shadow: 0 7px 20px rgba(20, 100, 190, .22), inset 0 1px rgba(255,255,255,.1);
+}
+
+.etapa-btn.active .etapa-num {
+    border-color: rgba(255,255,255,.25);
+    background: rgba(255,255,255,.13);
+    color: #fff;
+}
+
+/* Main sections */
+.main-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+}
+
+.projetos-section,
+.upload-section {
+    min-width: 0;
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 24px;
+    background: linear-gradient(145deg, rgba(19, 29, 43, .98), rgba(15, 23, 35, .98));
     box-shadow: var(--shadow);
-    margin-bottom: 24px;
+}
+
+.projetos-section {
+    padding: 25px;
 }
 
 .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
 }
 
 .section-header h2 {
-    font-size: 1.15rem;
-    font-weight: 700;
     color: var(--text);
-    letter-spacing: -0.02em;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -.035em;
 }
 
 .contador {
-    background: var(--primary);
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 4px 10px;
-    border-radius: 999px;
-    min-width: 28px;
-    text-align: center;
+    display: inline-grid;
+    place-items: center;
+    min-width: 31px;
+    height: 29px;
+    padding: 0 9px;
+    border: 1px solid rgba(105, 176, 255, .23);
+    border-radius: 9px;
+    background: rgba(59, 145, 255, .13);
+    color: #8dc4ff;
+    font-size: .78rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
 }
 
-/* Cards */
+.batch-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 0;
+}
+
+.btn-batch {
+    min-height: 38px;
+    padding: 0 13px;
+    border: 1px solid rgba(105, 176, 255, .24);
+    border-radius: 10px;
+    background: rgba(59, 145, 255, .1);
+    color: #a8d2ff;
+    font-size: .78rem;
+    font-weight: 750;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+.btn-batch:hover {
+    border-color: rgba(105, 176, 255, .5);
+    background: rgba(59, 145, 255, .18);
+}
+
+.btn-batch:active {
+    transform: scale(.98);
+}
+
+/* Project cards â€” classes preserved for app.js */
+#cards-container {
+    display: grid;
+    gap: 12px;
+}
+
 .projeto-card {
-    background: #f8fafc;
-    border: 1px solid var(--border);
+    position: relative;
+    min-width: 0;
+    margin-bottom: 0;
+    padding: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(151, 176, 205, .13);
     border-radius: var(--radius-sm);
-    padding: 18px 20px;
-    margin-bottom: 14px;
-    transition: box-shadow 0.2s ease, transform 0.1s ease;
+    background: linear-gradient(135deg, rgba(26, 40, 58, .92), rgba(20, 31, 46, .95));
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.projeto-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: linear-gradient(180deg, #4ba2ff, rgba(75, 162, 255, .12));
+    opacity: .75;
 }
 
 .projeto-card:hover {
+    border-color: rgba(105, 176, 255, .3);
     box-shadow: var(--shadow-hover);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .projeto-card h4 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 6px;
-    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    color: #f4f8ff;
+    font-size: 1.03rem;
+    font-weight: 780;
+    line-height: 1.35;
+    letter-spacing: -.02em;
+    overflow-wrap: anywhere;
 }
 
 .projeto-card .meta {
     display: flex;
     align-items: center;
-    gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 14px;
+    gap: 8px;
+    margin-bottom: 17px;
 }
 
 .projeto-card .meta span {
-    font-size: 0.8rem;
     color: var(--text-secondary);
-    font-weight: 500;
+    font-size: .78rem;
+    font-weight: 550;
 }
 
 .projeto-card .meta .etapa-badge {
-    background: var(--primary);
-    color: #fff;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    min-height: 25px;
+    padding: 3px 9px;
+    border: 1px solid rgba(105, 176, 255, .2);
+    border-radius: 7px;
+    background: rgba(59, 145, 255, .12);
+    color: #9acbff;
+    font-size: .67rem;
+    font-weight: 800;
+    letter-spacing: .045em;
+    text-transform: uppercase;
 }
 
 .projeto-card .meta .etapa-badge.prontos {
-    background: var(--success);
+    border-color: rgba(45, 212, 160, .2);
+    background: rgba(45, 212, 160, .1);
+    color: #6ce5bb;
 }
 
 .projeto-card .actions {
     display: flex;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(151, 176, 205, .1);
 }
 
 .projeto-card .btn-action {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 16px;
+    justify-content: center;
+    gap: 7px;
+    min-height: 39px;
+    padding: 0 13px;
+    border: 1px solid transparent;
     border-radius: 10px;
-    font-size: 0.9rem;
-    font-weight: 700;
+    font-size: .8rem;
+    font-weight: 750;
+    line-height: 1.2;
     text-decoration: none;
-    border: none;
     cursor: pointer;
-    transition: all 0.15s ease;
     touch-action: manipulation;
+    transition: transform .16s ease, filter .16s ease, background .16s ease;
+}
+
+.projeto-card .btn-action:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
 }
 
 .projeto-card .btn-action:active {
-    transform: scale(0.97);
+    transform: scale(.98);
 }
 
 .projeto-card .btn-visualizar {
-    background: var(--primary);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(30,58,95,0.2);
-}
-
-.projeto-card .btn-visualizar:hover {
-    background: var(--primary-light);
+    border-color: rgba(105, 176, 255, .24);
+    background: rgba(59, 145, 255, .14);
+    color: #acd5ff;
 }
 
 .projeto-card .btn-avancar {
-    background: var(--success);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+    border-color: rgba(45, 212, 160, .2);
+    background: rgba(45, 212, 160, .13);
+    color: #70e7bf;
 }
 
-.projeto-card .btn-avancar:hover {
-    background: #059669;
+.projeto-card .btn-voltar,
+.btn-voltar {
+    border: 1px solid rgba(247, 184, 75, .22);
+    background: rgba(247, 184, 75, .13);
+    color: #ffd080;
+    box-shadow: none;
 }
 
 .projeto-card .btn-excluir {
-    background: var(--danger);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(239,68,68,0.2);
+    border-color: rgba(255, 100, 116, .2);
+    background: rgba(255, 100, 116, .12);
+    color: #ff9ba5;
 }
 
-.projeto-card .btn-excluir:hover {
-    background: #dc2626;
+.btn-voltar:hover,
+.projeto-card .btn-voltar:hover {
+    background: rgba(247, 184, 75, .2);
 }
 
-/* Upload */
+/* Returned-project notice */
+.aviso-volta {
+    margin-bottom: 13px;
+    padding: 13px 15px;
+    border: 1px solid rgba(247, 184, 75, .2);
+    border-left: 3px solid var(--warning);
+    border-radius: 11px;
+    background: rgba(247, 184, 75, .07);
+    color: #f7c96f;
+    font-size: .84rem;
+    line-height: 1.5;
+}
+
+.aviso-volta strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #ffda8e;
+    font-weight: 800;
+}
+
+/* Upload panel */
 .upload-section {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 24px;
-    box-shadow: var(--shadow);
+    padding: 25px;
+}
+
+.upload-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.upload-icon {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    flex: 0 0 43px;
+    border: 1px solid rgba(105, 176, 255, .2);
+    border-radius: 13px;
+    background: rgba(59, 145, 255, .12);
+    font-size: 1.25rem;
 }
 
 .upload-section h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
+    margin-bottom: 0;
     color: var(--text);
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
+    font-size: 1.12rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
 }
 
 .upload-section form {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 10px;
 }
 
 .upload-section label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
     display: block;
-    margin-bottom: 4px;
+    margin: 7px 0 0;
+    color: #b5c4d7;
+    font-size: .82rem;
+    font-weight: 700;
 }
 
 .upload-section input[type="text"],
 .upload-section input[type="file"] {
-    padding: 14px 16px;
-    border: 2px solid var(--border);
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-strong);
     border-radius: 12px;
-    font-size: 1rem;
-    background: #f8fafc;
+    background: #0d1622;
     color: var(--text);
-    transition: border-color 0.15s ease;
+    font-size: .9rem;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.upload-section input[type="file"] {
+    padding: 9px;
+    color: var(--text-secondary);
+}
+
+.upload-section input[type="file"]::file-selector-button {
+    margin-right: 10px;
+    padding: 8px 11px;
+    border: 0;
+    border-radius: 8px;
+    background: #203a57;
+    color: #dceeff;
+    font-size: .8rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.upload-section input[type="text"]::placeholder,
+.modal-content textarea::placeholder {
+    color: #687d95;
 }
 
 .upload-section input[type="text"]:focus,
 .upload-section input[type="file"]:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 145, 255, .12);
 }
 
 .upload-section button[type="submit"] {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 49px;
+    margin-top: 10px;
+    padding: 12px 18px;
+    border: 1px solid rgba(255,255,255,.12);
     border-radius: 12px;
-    font-size: 1.05rem;
-    font-weight: 700;
+    background: linear-gradient(135deg, #419cff, #2474dd);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(35, 117, 221, .2), inset 0 1px rgba(255,255,255,.15);
+    font-size: .92rem;
+    font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(30,58,95,0.25);
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition: filter .18s ease, transform .18s ease;
 }
 
 .upload-section button[type="submit"]:hover {
-    background: var(--primary-light);
+    filter: brightness(1.08);
 }
 
 .upload-section button[type="submit"]:active {
-    transform: scale(0.98);
+    transform: scale(.99);
 }
 
 .arquivos-lista {
-    margin-top: 14px;
-    padding: 12px;
-    background: #f8fafc;
-    border-radius: 10px;
+    margin-top: 15px;
+    padding: 13px 15px;
     border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(8, 15, 24, .55);
 }
 
 .arquivos-lista p {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 4px;
+    margin-bottom: 7px;
+    color: #afc1d6;
+    font-size: .82rem;
+    font-weight: 750;
 }
 
 .arquivos-lista ul {
-    list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .arquivos-lista li {
-    font-size: 0.9rem;
-    color: var(--text);
-    padding: 4px 0;
-    border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(151, 176, 205, .1);
+    color: #dce7f4;
+    font-size: .84rem;
+    overflow-wrap: anywhere;
 }
 
 .arquivos-lista li:last-child {
-    border-bottom: none;
+    border-bottom: 0;
 }
 
-.batch-actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-}
-
+/* Sticky bulk actions */
 .batch-actions-fixed {
     position: sticky;
-    bottom: 16px;
+    bottom: 12px;
     z-index: 10;
     display: flex;
     justify-content: center;
-    padding: 8px 0;
-}
-
-.btn-batch {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(30,58,95,0.2);
-    transition: background 0.15s ease;
-}
-
-.btn-batch:hover {
-    background: var(--primary-light);
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 16px;
+    padding: 12px;
+    border: 1px solid rgba(151, 176, 205, .12);
+    border-radius: 15px;
+    background: rgba(11, 17, 26, .88);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .22);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 .btn-avancar-lote {
-    background: var(--success);
-    box-shadow: 0 2px 8px rgba(16,185,129,0.2);
+    border-color: rgba(45, 212, 160, .22);
+    background: rgba(45, 212, 160, .13);
+    color: #70e7bf;
+    box-shadow: none;
 }
 
 .btn-avancar-lote:hover {
-    background: #059669;
+    background: rgba(45, 212, 160, .2);
 }
 
 .btn-excluir-lote {
-    background: var(--danger);
-    box-shadow: 0 2px 8px rgba(239,68,68,0.2);
+    border-color: rgba(255, 100, 116, .22);
+    background: rgba(255, 100, 116, .13);
+    color: #ff9ba5;
+    box-shadow: none;
 }
 
 .btn-excluir-lote:hover {
-    background: #dc2626;
+    background: rgba(255, 100, 116, .2);
 }
 
+/* Selection checkboxes */
 .card-check {
     display: inline-flex;
     align-items: center;
-    margin-right: 10px;
+    justify-content: center;
+    margin-right: 9px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .card-check input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
     accent-color: var(--primary);
     cursor: pointer;
 }
 
-.btn-voltar {
-    background: #f59e0b;
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(245,158,11,0.2);
-}
-
-.btn-voltar:hover {
-    background: #d97706;
-}
-
+/* Modal */
 .modal {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
+    inset: 0;
+    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
     padding: 20px;
+    background: rgba(3, 8, 14, .78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .modal-content {
-    background: #fff;
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 420px;
     width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-width: 460px;
+    max-height: min(90vh, 760px);
+    overflow-y: auto;
+    padding: 27px;
+    border: 1px solid var(--border-strong);
+    border-radius: 22px;
+    background: linear-gradient(145deg, #172538, #101a28);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, .55);
+    animation: modalIn .22s ease;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(8px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .modal-content h3 {
-    margin-bottom: 16px;
-    font-size: 1.2rem;
+    margin-bottom: 19px;
     color: var(--text);
+    font-size: 1.23rem;
+    font-weight: 800;
+    letter-spacing: -.03em;
 }
 
 .modal-content label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
     display: block;
-    margin-top: 10px;
-    margin-bottom: 4px;
+    margin: 15px 0 6px;
+    color: #b5c4d7;
+    font-size: .82rem;
+    font-weight: 750;
 }
 
 .modal-content select,
 .modal-content textarea {
     width: 100%;
-    padding: 12px;
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    font-size: 1rem;
-    background: #f8fafc;
+    min-height: 47px;
+    padding: 12px 13px;
+    border: 1px solid var(--border-strong);
+    border-radius: 11px;
+    background: #0b1420;
     color: var(--text);
+    font-family: inherit;
+    font-size: .92rem;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.modal-content textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.modal-content select:focus,
+.modal-content textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 145, 255, .12);
 }
 
 .modal-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 23px;
 }
 
 .modal-buttons button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: 1;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: 700;
-    border: none;
+    min-height: 46px;
+    padding: 11px 14px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    font-size: .9rem;
+    font-weight: 800;
     cursor: pointer;
-    font-size: 1rem;
+    transition: filter .16s ease, transform .16s ease;
+}
+
+.modal-buttons button:hover {
+    filter: brightness(1.08);
+}
+
+.modal-buttons button:active {
+    transform: scale(.985);
 }
 
 .btn-cancel {
-    background: #e5e7eb;
-    color: var(--text);
+    border-color: var(--border-strong) !important;
+    background: rgba(255,255,255,.055);
+    color: #d4e0ef;
 }
 
 .btn-confirm {
-    background: var(--primary);
+    background: linear-gradient(135deg, #419cff, #2474dd);
     color: #fff;
+    box-shadow: 0 6px 16px rgba(35, 117, 221, .2);
+}
+
+/* Empty state and upload feedback */
+.empty-state {
+    padding: 48px 20px;
+    border: 1px dashed rgba(151, 176, 205, .2);
+    border-radius: 15px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.empty-state p:first-child {
+    margin-bottom: 6px;
+    color: #d7e4f3;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.empty-state p:last-child {
+    color: var(--primary-light);
+    font-size: .86rem;
+    font-weight: 700;
 }
 
 #mensagem-upload {
-    margin-top: 12px;
-    font-size: 0.9rem;
-    font-weight: 600;
     min-height: 1.4em;
+    margin-top: 12px;
+    color: #dbe8f7;
+    font-size: .88rem;
+    font-weight: 700;
 }
 
-/* Estado vazio */
-.empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-secondary);
-}
-
-.empty-state p {
-    font-size: 1rem;
-    margin-bottom: 8px;
-}
-
-/* Desktop */
-@media (min-width: 640px) {
+/* Desktop layout */
+@media (min-width: 760px) {
     .app {
-        padding: 40px 24px 100px;
+        padding-top: 42px;
+    }
+
+    .main-content {
+        grid-template-columns: minmax(0, 1.65fr) minmax(280px, .85fr);
+        align-items: start;
+        gap: 22px;
+    }
+
+    .upload-section {
+        position: sticky;
+        top: 20px;
+    }
+
+    .projetos-section,
+    .upload-section {
+        padding: 25px;
+    }
+
+    .projeto-card {
+        padding: 21px 22px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .app-header {
+        padding: 32px 34px 27px;
     }
 
     .etapas-nav {
-        gap: 12px;
+        gap: 10px;
     }
 
     .etapa-btn {
-        padding: 12px 20px;
-        font-size: 0.9rem;
+        padding: 0 17px;
+    }
+}
+
+/* Mobile refinements */
+@media (max-width: 600px) {
+    .app {
+        width: min(100% - 22px, 520px);
+        padding: 12px 0 96px;
+    }
+
+    .app-header {
+        margin-bottom: 18px;
+        padding: 20px 17px 18px;
+        border-radius: 20px;
+    }
+
+    .header-inner {
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .logo-area {
+        gap: 11px;
+    }
+
+    .logo-icon {
+        width: 46px;
+        height: 46px;
+        flex-basis: 46px;
+        border-radius: 14px;
+        font-size: 1.45rem;
+    }
+
+    .logo-text h1 {
+        font-size: 1.48rem;
+    }
+
+    .online-badge {
+        margin-top: 5px;
+        font-size: .68rem;
+    }
+
+    .btn-add {
+        min-height: 40px;
+        padding: 0 11px;
+        border-radius: 11px;
+        font-size: .76rem;
+    }
+
+    .subtitle {
+        margin-top: 14px;
+        font-size: .82rem;
+    }
+
+    .etapas-nav {
+        gap: 7px;
+        margin-bottom: 17px;
+        padding-bottom: 9px;
+    }
+
+    .etapa-btn {
+        min-height: 42px;
+        gap: 6px;
+        padding: 0 11px;
+        border-radius: 12px;
+        font-size: .76rem;
+    }
+
+    .etapa-btn .etapa-num {
+        width: 22px;
+        height: 22px;
+        border-radius: 7px;
+        font-size: .61rem;
+    }
+
+    .main-content {
+        gap: 15px;
+    }
+
+    .projetos-section,
+    .upload-section {
+        padding: 17px 14px;
+        border-radius: 18px;
+    }
+
+    .section-header {
+        align-items: flex-start;
+        margin-bottom: 15px;
+        gap: 8px;
+    }
+
+    .section-title {
+        gap: 8px;
+    }
+
+    .section-header h2 {
+        font-size: 1.08rem;
+    }
+
+    .contador {
+        min-width: 27px;
+        height: 26px;
+        padding: 0 7px;
+        font-size: .72rem;
+    }
+
+    .btn-batch {
+        min-height: 34px;
+        padding: 0 9px;
+        font-size: .7rem;
+    }
+
+    .projeto-card {
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+
+    .projeto-card h4 {
+        font-size: .96rem;
+    }
+
+    .projeto-card .meta {
+        gap: 7px;
+        margin-bottom: 13px;
+    }
+
+    .projeto-card .meta span {
+        font-size: .73rem;
     }
 
     .projeto-card .actions {
-        gap: 12px;
+        gap: 7px;
+        padding-top: 12px;
     }
 
     .projeto-card .btn-action {
-        padding: 10px 20px;
-        font-size: 0.95rem;
+        min-height: 36px;
+        padding: 0 10px;
+        border-radius: 9px;
+        font-size: .74rem;
+    }
+
+    .upload-header {
+        gap: 10px;
+        margin-bottom: 17px;
+    }
+
+    .upload-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        border-radius: 11px;
+        font-size: 1.1rem;
+    }
+
+    .upload-section h3 {
+        font-size: 1.02rem;
+    }
+
+    .upload-section input[type="text"],
+    .upload-section input[type="file"] {
+        min-height: 45px;
+        padding: 10px;
+        font-size: .84rem;
+    }
+
+    .upload-section button[type="submit"] {
+        min-height: 46px;
+        font-size: .88rem;
+    }
+
+    .batch-actions-fixed {
+        bottom: 8px;
+        gap: 7px;
+        padding: 9px;
+        border-radius: 13px;
+    }
+
+    .batch-actions-fixed .btn-batch {
+        flex: 1 1 auto;
+        min-height: 40px;
+        padding: 0 9px;
+        font-size: .72rem;
+    }
+
+    .modal {
+        padding: 12px;
+    }
+
+    .modal-content {
+        padding: 21px 17px;
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 380px) {
+    .header-inner {
+        flex-wrap: wrap;
+    }
+
+    .btn-add {
+        margin-left: 57px;
+    }
+
+    .section-header {
+        flex-wrap: wrap;
+    }
+
+    .batch-actions {
+        width: 100%;
+    }
+
+    .batch-actions .btn-batch {
+        width: 100%;
+    }
+
+    .projeto-card .btn-action {
+        flex: 1 1 auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+
+
+/* ==========================================================
+   MOBILE-FIRST POLISH â€” production workflow
+   Overrides only: existing HTML and JavaScript hooks preserved.
+   ========================================================== */
+
+/* Slightly richer surface depth on every screen */
+body {
+    background:
+        radial-gradient(ellipse at 50% -12%, rgba(37, 115, 205, .2), transparent 38%),
+        linear-gradient(180deg, #0b111a 0%, #0a0f16 65%, #0c1420 100%);
+}
+
+.app {
+    width: min(100% - 28px, 1120px);
+}
+
+/* Compact app-bar instead of a large hero panel */
+.app-header {
+    padding: 19px 20px 17px;
+    border-radius: 22px;
+    background:
+        linear-gradient(135deg, rgba(24, 44, 67, .98), rgba(15, 26, 41, .98) 72%),
+        var(--surface);
+}
+
+.app-header::after {
+    width: 190px;
+    height: 190px;
+    right: -82px;
+    top: -116px;
+    background: rgba(48, 139, 244, .16);
+}
+
+.logo-icon {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    flex-basis: 50px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #368fe9, #1a579b);
+    font-size: 1.55rem;
+}
+
+.logo-text h1 {
+    font-size: 1.62rem;
+    letter-spacing: -.055em;
+}
+
+.subtitle {
+    margin-top: 12px;
+    font-size: .83rem;
+}
+
+/* Stage rail: more touch-friendly and easier to scan */
+.etapas-nav {
+    gap: 8px;
+    margin-right: -1px;
+    margin-left: -1px;
+    padding: 3px 1px 12px;
+    scroll-snap-type: x proximity;
+}
+
+.etapa-btn {
+    scroll-snap-align: start;
+    min-height: 46px;
+    padding: 0 13px;
+    border-radius: 13px;
+    background: #111c2a;
+}
+
+.etapa-btn.active {
+    background: linear-gradient(135deg, #287edb, #174e8b);
+    border-color: rgba(118, 190, 255, .55);
+}
+
+/* Clearer hierarchy and less empty padding */
+.projetos-section,
+.upload-section {
+    border-color: rgba(144, 174, 209, .15);
+    background: linear-gradient(155deg, #131e2d, #101925 78%);
+}
+
+.projetos-section {
+    padding: 22px;
+}
+
+.section-header {
+    margin-bottom: 17px;
+}
+
+.section-header h2 {
+    font-size: 1.2rem;
+}
+
+.contador {
+    border-radius: 8px;
+    background: #1b3858;
+    color: #a9d5ff;
+}
+
+/* Project cards become compact, clear work items */
+#cards-container {
+    gap: 11px;
+}
+
+.projeto-card {
+    padding: 17px 16px 15px;
+    border-color: rgba(145, 174, 207, .15);
+    border-radius: 15px;
+    background: linear-gradient(135deg, #1a293b, #152233);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, .11);
+}
+
+.projeto-card::before {
+    width: 3px;
+    background: linear-gradient(180deg, #4aa5ff, #1c5e9e);
+}
+
+.projeto-card h4 {
+    font-size: 1rem;
+    line-height: 1.35;
+}
+
+.projeto-card .meta {
+    margin-bottom: 13px;
+}
+
+.projeto-card .actions {
+    border-top-color: rgba(145, 174, 207, .12);
+    padding-top: 12px;
+}
+
+.projeto-card .btn-action {
+    min-height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+}
+
+/* Bulk controls stay visible without feeling like a huge toolbar */
+.batch-actions-fixed {
+    bottom: max(8px, env(safe-area-inset-bottom));
+    border-color: rgba(142, 173, 210, .17);
+    background: rgba(12, 20, 31, .92);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, .35);
+}
+
+/* Upload reads like a deliberate action panel */
+.upload-section {
+    padding: 22px;
+}
+
+.upload-header {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(145, 174, 207, .12);
+}
+
+.upload-icon {
+    background: linear-gradient(145deg, rgba(55, 145, 235, .22), rgba(35, 93, 155, .13));
+    border-color: rgba(105, 176, 255, .25);
+}
+
+.upload-section label {
+    margin-top: 8px;
+    color: #c2d0e1;
+}
+
+.upload-section input[type="text"],
+.upload-section input[type="file"] {
+    border-color: rgba(145, 174, 207, .19);
+    background: #0c1521;
+}
+
+.upload-section button[type="submit"] {
+    min-height: 50px;
+    background: linear-gradient(135deg, #368fe9, #1d69bf);
+}
+
+/* More refined modal */
+.modal-content {
+    border-color: rgba(145, 174, 207, .2);
+    background: linear-gradient(150deg, #192a3e, #111b29);
+}
+
+/* Desktop: keep density and use space more efficiently */
+@media (min-width: 760px) {
+    .app {
+        width: min(100% - 48px, 1240px);
+        padding-top: 34px;
+    }
+
+    .app-header {
+        padding: 28px 30px 23px;
+    }
+
+    .main-content {
+        grid-template-columns: minmax(0, 1.7fr) minmax(300px, .8fr);
+        gap: 20px;
+    }
+
+    .projetos-section,
+    .upload-section {
+        padding: 24px;
+    }
+}
+
+/* Mobile is the primary experience */
+@media (max-width: 600px) {
+    .app {
+        width: calc(100% - 20px);
+        padding: 10px 0 calc(88px + env(safe-area-inset-bottom));
+    }
+
+    .app-header {
+        margin-bottom: 15px;
+        padding: 17px 15px 15px;
+        border-radius: 18px;
+    }
+
+    .header-inner {
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .logo-area {
+        gap: 10px;
+        flex: 1 1 auto;
+    }
+
+    .logo-icon {
+        width: 43px;
+        height: 43px;
+        flex-basis: 43px;
+        border-radius: 13px;
+        font-size: 1.35rem;
+    }
+
+    .logo-text h1 {
+        font-size: 1.36rem;
+    }
+
+    .online-badge {
+        margin-top: 4px;
+        padding: 3px 7px;
+        font-size: .65rem;
+    }
+
+    .btn-add {
+        min-height: 39px;
+        flex: 0 0 auto;
+        padding: 0 10px;
+        border-radius: 10px;
+        font-size: .72rem;
+    }
+
+    .subtitle {
+        margin-top: 11px;
+        font-size: .78rem;
+    }
+
+    .etapas-nav {
+        margin-bottom: 14px;
+        padding-bottom: 9px;
+        gap: 7px;
+    }
+
+    .etapa-btn {
+        min-height: 42px;
+        gap: 6px;
+        padding: 0 10px;
+        border-radius: 11px;
+        font-size: .74rem;
+    }
+
+    .etapa-btn .etapa-num {
+        width: 21px;
+        height: 21px;
+        border-radius: 6px;
+        font-size: .6rem;
+    }
+
+    .main-content {
+        gap: 13px;
+    }
+
+    .projetos-section,
+    .upload-section {
+        padding: 16px 12px;
+        border-radius: 16px;
+    }
+
+    .section-header {
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 13px;
+    }
+
+    .section-header h2 {
+        font-size: 1.05rem;
+    }
+
+    .contador {
+        min-width: 25px;
+        height: 25px;
+        padding: 0 7px;
+        font-size: .7rem;
+    }
+
+    .batch-actions .btn-batch {
+        min-height: 32px;
+        padding: 0 8px;
+        font-size: .68rem;
+    }
+
+    .projeto-card {
+        padding: 15px 12px 12px;
+        border-radius: 13px;
+    }
+
+    .projeto-card h4 {
+        font-size: .94rem;
+        margin-bottom: 9px;
+    }
+
+    .projeto-card .meta {
+        gap: 6px;
+        margin-bottom: 11px;
+    }
+
+    .projeto-card .meta span {
+        font-size: .7rem;
+    }
+
+    .projeto-card .meta .etapa-badge {
+        min-height: 23px;
+        padding: 2px 7px;
+        font-size: .62rem;
+    }
+
+    .projeto-card .actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        padding-top: 11px;
+    }
+
+    .projeto-card .btn-action {
+        width: 100%;
+        min-width: 0;
+        min-height: 39px;
+        padding: 0 7px;
+        font-size: .72rem;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .upload-section {
+        padding: 17px 13px;
+    }
+
+    .upload-header {
+        gap: 10px;
+        padding-bottom: 13px;
+        margin-bottom: 13px;
+    }
+
+    .upload-section h3 {
+        font-size: 1rem;
+    }
+
+    .upload-section form {
+        gap: 8px;
+    }
+
+    .upload-section label {
+        margin-top: 7px;
+        font-size: .78rem;
+    }
+
+    .upload-section input[type="text"],
+    .upload-section input[type="file"] {
+        min-height: 43px;
+        padding: 9px;
+        border-radius: 10px;
+        font-size: .8rem;
+    }
+
+    .upload-section input[type="file"]::file-selector-button {
+        padding: 7px 8px;
+        margin-right: 7px;
+        font-size: .72rem;
+    }
+
+    .upload-section button[type="submit"] {
+        min-height: 46px;
+        margin-top: 8px;
+        font-size: .85rem;
+    }
+
+    .arquivos-lista {
+        padding: 10px;
+    }
+
+    .arquivos-lista li {
+        font-size: .78rem;
+    }
+
+    .batch-actions-fixed {
+        bottom: calc(6px + env(safe-area-inset-bottom));
+        gap: 6px;
+        margin-top: 12px;
+        padding: 7px;
+        border-radius: 12px;
+    }
+
+    .batch-actions-fixed .btn-batch {
+        min-height: 38px;
+        padding: 0 7px;
+        font-size: .68rem;
+        line-height: 1.2;
+    }
+
+    .modal {
+        align-items: flex-end;
+        padding: 10px;
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
+    }
+
+    .modal-content {
+        max-height: 88dvh;
+        padding: 20px 16px;
+        border-radius: 20px;
+    }
+
+    .modal-content h3 {
+        font-size: 1.12rem;
+    }
+
+    .modal-content select,
+    .modal-content textarea {
+        min-height: 44px;
+        padding: 10px 11px;
+        font-size: .88rem;
+    }
+
+    .modal-buttons button {
+        min-height: 44px;
+        font-size: .85rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .app {
+        width: calc(100% - 16px);
+    }
+
+    .app-header {
+        padding-right: 11px;
+        padding-left: 11px;
+    }
+
+    .logo-area {
+        gap: 7px;
+    }
+
+    .logo-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        font-size: 1.2rem;
+    }
+
+    .logo-text h1 {
+        font-size: 1.22rem;
+    }
+
+    .btn-add {
+        padding: 0 8px;
+        font-size: .68rem;
+    }
+
+    .projetos-section,
+    .upload-section {
+        padding-right: 9px;
+        padding-left: 9px;
+    }
+
+    .section-header {
+        flex-wrap: wrap;
+    }
+
+    .batch-actions {
+        width: 100%;
+    }
+
+    .batch-actions .btn-batch {
+        width: auto;
     }
 }

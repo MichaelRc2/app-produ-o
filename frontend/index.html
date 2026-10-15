@@ -9,10 +9,13 @@
 <body>
     <div class="app">
         <header class="app-header">
-            <div class="header-top">
-                <div class="logo">
+            <div class="header-inner">
+                <div class="logo-area">
                     <span class="logo-icon">🏭</span>
-                    <h1>Produção</h1>
+                    <div class="logo-text">
+                        <h1>Produção</h1>
+                        <span class="online-badge">● Online</span>
+                    </div>
                 </div>
                 <button class="btn-add" onclick="document.getElementById('upload-section').scrollIntoView({behavior:'smooth'})">+ Novo projeto</button>
             </div>
@@ -20,23 +23,25 @@
         </header>
 
         <nav class="etapas-nav" aria-label="Etapas de produção">
-            <button class="etapa-btn active" data-etapa="Projetos">Projetos</button>
-            <button class="etapa-btn" data-etapa="Corte">Corte</button>
-            <button class="etapa-btn" data-etapa="Lapidação">Lapidação</button>
-            <button class="etapa-btn" data-etapa="Furação">Furação</button>
-            <button class="etapa-btn" data-etapa="Têmpera">Têmpera</button>
-            <button class="etapa-btn" data-etapa="Pintura">Pintura</button>
-            <button class="etapa-btn" data-etapa="Prontos para instalar">Prontos</button>
+            <a href="#" class="etapa-btn active" data-etapa="Projetos"><span class="etapa-num">01</span>Projetos</a>
+            <a href="#" class="etapa-btn" data-etapa="Corte"><span class="etapa-num">02</span>Corte</a>
+            <a href="#" class="etapa-btn" data-etapa="Lapidação"><span class="etapa-num">03</span>Lapidação</a>
+            <a href="#" class="etapa-btn" data-etapa="Furação"><span class="etapa-num">04</span>Furação</a>
+            <a href="#" class="etapa-btn" data-etapa="Têmpera"><span class="etapa-num">05</span>Têmpera</a>
+            <a href="#" class="etapa-btn" data-etapa="Pintura"><span class="etapa-num">06</span>Pintura</a>
+            <a href="#" class="etapa-btn" data-etapa="Prontos para instalar"><span class="etapa-num">07</span>Prontos</a>
         </nav>
 
         <main class="main-content">
             <section class="projetos-section" id="lista-projetos">
                 <div class="section-header">
-                    <h2 id="etapa-titulo">Projetos</h2>
-                    <span class="contador" id="contador-etapa">0</span>
-                </div>
-                <div class="batch-actions">
-                    <button class="btn-batch" onclick="selecionarTodos()">Selecionar todos</button>
+                    <div class="section-title">
+                        <h2 id="etapa-titulo">Projetos</h2>
+                        <span class="contador" id="contador-etapa">0</span>
+                    </div>
+                    <div class="batch-actions">
+                        <button class="btn-batch" onclick="selecionarTodos()">Selecionar todos</button>
+                    </div>
                 </div>
                 <div id="cards-container"></div>
                 <div class="batch-actions-fixed">
@@ -46,7 +51,10 @@
             </section>
 
             <section class="upload-section" id="upload-section">
-                <h3>➕ Adicionar Projetos</h3>
+                <div class="upload-header">
+                    <span class="upload-icon">📄</span>
+                    <h3>Adicionar Projetos</h3>
+                </div>
                 <form id="form-projeto" enctype="multipart/form-data">
                     <label for="nome">Nome do projeto</label>
                     <input type="text" id="nome" name="nome" placeholder="Ex: Vidro Sala João (opcional)" />
@@ -65,11 +73,11 @@
     <div id="modal-voltar" class="modal" style="display:none;">
         <div class="modal-content">
             <h3>↩ Voltar projeto</h3>
-            <label for="etapa-destino">Etapa de destino:</label>
+            <label for="etapa-destino">Etapa de destino</label>
             <select id="etapa-destino">
                 <option value="">Selecione uma etapa</option>
             </select>
-            <label for="motivo">Motivo:</label>
+            <label for="motivo">Motivo</label>
             <select id="motivo" required>
                 <option value="">Selecione um motivo</option>
                 <option value="Reposição">Reposição</option>
@@ -78,7 +86,7 @@
                 <option value="Alteração de projeto">Alteração de projeto</option>
                 <option value="Outro">Outro</option>
             </select>
-            <label for="observacao">Observação (opcional):</label>
+            <label for="observacao">Observação (opcional)</label>
             <textarea id="observacao" rows="3" placeholder="Descreva o motivo ou detalhes..."></textarea>
             <div class="modal-buttons">
                 <button onclick="fecharModal()" class="btn-cancel">Cancelar</button>
